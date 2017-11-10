@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 
+#include "BaseDataObject.h"
 #include "BaseDataAggregator.h"
 #include "VectorFloat.h"
 
@@ -12,9 +13,11 @@ class VectorFloatAnalysis : public BaseDataAggregator {
   VectorFloatAnalysis();
   ~VectorFloatAnalysis();
 
+  void aggregate(BaseDataObject *dataObject) override;
+  void finish() override; 
 
-  void aggregate(VectorFloat *vec);
-  void finish(); 
+ protected:
+  float fMean, fVar;
 
 };
 

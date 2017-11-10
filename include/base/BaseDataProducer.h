@@ -7,8 +7,11 @@
 class BaseDataProducer : public BaseNode {
 
  public:
-  virtual BaseDataObject *getDataObject();
-  virtual bool            hasDataObject(); 
+  BaseDataProducer(); 
+  ~BaseDataProducer(); 
+
+  virtual BaseDataObject *getDataObject() = 0;
+  virtual bool            hasDataObject() = 0; 
 
 };
 

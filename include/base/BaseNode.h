@@ -6,6 +6,9 @@
 class BaseNode {
 
  public:
+  BaseNode(); 
+  ~BaseNode(); 
+
 
   void setId(const std::string & id){
     fId = id; 

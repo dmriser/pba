@@ -3,4 +3,12 @@
 
 #include "BaseDataObject.h"
 
+BaseDataObject::BaseDataObject(){
+}
+
+BaseDataObject::~BaseDataObject(){
+}
+
+
+
 #endif

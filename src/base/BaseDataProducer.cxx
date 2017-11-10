@@ -5,10 +5,14 @@
 
 #include "BaseDataObject.h"
 #include "BaseDataProducer.h"
+#include "Types.h"
 
-BaseDataObject * BaseDataProducer::getDataObject(){
-  std::cout << "[BaseDataProducer::getDataObject] Base production method called, returning null. " << std::endl; 
-  return new BaseDataObject(); 
+BaseDataProducer::BaseDataProducer(){
+  fNodeType = node_types::producer; 
+}
+
+BaseDataProducer::~BaseDataProducer(){
+
 }
 
 #endif

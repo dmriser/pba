@@ -3,4 +3,13 @@
 
 #include "VectorFloat.h"
 
+VectorFloat::VectorFloat(){
+  fId = "VectorFloat"; 
+}
+
+VectorFloat::~VectorFloat(){
+}
+
+
+
 #endif

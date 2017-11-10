@@ -1,6 +1,7 @@
 #ifndef base_data_aggregator_h
 #define base_data_aggregator_h
 
+#include "BaseDataObject.h"
 #include "BaseNode.h"
 
 class BaseDataAggregator : public BaseNode {
@@ -9,8 +10,8 @@ class BaseDataAggregator : public BaseNode {
   BaseDataAggregator();
   ~BaseDataAggregator();
 
-  virtual void aggregate(BaseDataObject *dataObject);
-  virtual void finish();
+  virtual void aggregate(BaseDataObject *dataObject) = 0;
+  virtual void finish() = 0;
 
 };
 

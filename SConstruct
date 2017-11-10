@@ -5,6 +5,7 @@ env.ParseConfig("root-config --glibs --cflags")
 env.Append(CCFLAGS = ['-g','-std=c++11'])
 env.Append(CPPPATH=['include/base/', 'include/producers/', 'include/aggregators/', 'include/data/'])
 
-# Build the h22 library 
+# build the library 
 sources  = glob.glob('src/*/*.cxx')
 env.SharedLibrary('lib/analysis', sources)
+

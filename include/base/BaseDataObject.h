@@ -6,6 +6,9 @@
 class BaseDataObject {  
 
  public:
+  BaseDataObject(); 
+  virtual ~BaseDataObject(); 
+
   std::string getId() const {
     return fId; 
   }
