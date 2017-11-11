@@ -7,7 +7,7 @@
 #include "BaseDataObject.h"
 #include "BaseDataProducer.h"
 #include "BaseDataProcessor.h"
-
+#include "Factory.h"
 #include "VectorFloat.h"
 #include "VectorFloatAnalysis.h"
 #include "VectorFloatCut.h"
@@ -17,13 +17,17 @@
 int main(int argc, char *argv[]){
   
   // testing producer 
-  VectorFloatProducer *producer = new VectorFloatProducer(); 
+  //  VectorFloatProducer *producer = new VectorFloatProducer(); 
+  BaseDataProducer *producer = Factory::getProducerInstance("VectorFloatProducer"); 
   
+
   // testing simple aggregator 
-  VectorFloatAnalysis *analysis = new VectorFloatAnalysis(); 
+  //  VectorFloatAnalysis *analysis = new VectorFloatAnalysis(); 
+  BaseDataAggregator *analysis = Factory::getAggregatorInstance("VectorFloatAnalysis");
 
   // testing simple cut 
-  VectorFloatCut *processor = new VectorFloatCut(); 
+  //  VectorFloatCut *processor = new VectorFloatCut(); 
+  BaseDataProcessor *processor = Factory::getProcessorInstance("VectorFloatCut"); 
 
   for(int i=0; i<10; i++){
     if(producer->hasDataObject()){

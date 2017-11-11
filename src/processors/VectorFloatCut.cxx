@@ -6,6 +6,7 @@
 #include "BaseProcessorResult.h"
 
 VectorFloatCut::VectorFloatCut(){
+  fId = "VectorFloatCut";
   fCutValue = 0.5; 
 }
 

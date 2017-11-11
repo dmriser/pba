@@ -9,7 +9,7 @@ class VectorFloatCut : public BaseDataProcessor {
   VectorFloatCut(); 
   ~VectorFloatCut(); 
 
-  BaseProcessorResult * processDataObject(BaseDataObject *dataObject); 
+  BaseProcessorResult *processDataObject(BaseDataObject *dataObject); 
 
  protected:
   float fCutValue; 
