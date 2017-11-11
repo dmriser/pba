@@ -3,9 +3,8 @@ import os, glob
 env = Environment(ENV = {'PATH':os.environ['PATH']})
 env.ParseConfig("root-config --glibs --cflags")
 env.Append(CCFLAGS = ['-g','-std=c++11'])
-env.Append(CPPPATH=['include/base/', 'include/producers/', 'include/aggregators/', 'include/data/'])
-
+env.Append(CPPPATH=['include/base/', 'include/producers/', 'include/aggregators/', 'include/data/', 'include/processors/'])
 # build the library 
 sources  = glob.glob('src/*/*.cxx')
-env.SharedLibrary('lib/analysis', sources)
+env.SharedLibrary('lib/pba', sources)
 

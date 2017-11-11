@@ -16,6 +16,7 @@ class VectorFloatProducer : public BaseDataProducer {
   bool         hasDataObject(); 
 
  protected:
+  int      fLength; 
   TRandom3 fRandom; 
 
 };

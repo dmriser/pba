@@ -10,11 +10,8 @@
 
 class BaseDataProcessor : public BaseNode {
  public:
-
+  BaseDataProcessor(); 
   BaseProcessorResult *processDataObject(BaseDataObject *dataObject);
-
-  bool configure(BaseConfigurationObject *configObject); 
-
 };
 
 

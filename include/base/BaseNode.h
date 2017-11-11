@@ -3,12 +3,15 @@
 
 #include <iostream>
 
+#include "BaseConfigurationObject.h"
+
 class BaseNode {
 
  public:
   BaseNode(); 
   ~BaseNode(); 
 
+  virtual bool configure(BaseConfigurationObject *configObject);
 
   void setId(const std::string & id){
     fId = id; 
