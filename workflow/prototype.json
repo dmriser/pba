@@ -1,0 +1,33 @@
+{
+    "pba_workflow":{
+
+	"meta":{
+	    "name":"prototype"
+	},
+
+	"nodes":{
+	    "add_producer":{
+		"id":"VectorFloatProducer",
+		"options":{
+
+		}
+	    },
+
+	    "add_processor":{
+		"id":"VectorFloatCut",
+		"options":{
+
+		}
+	    }
+
+	    "add_aggregator":{
+		"id":"VectorFloatAnalysis",
+		"options":{
+
+		}
+	    }	    
+	}
+
+
+    }
+}
