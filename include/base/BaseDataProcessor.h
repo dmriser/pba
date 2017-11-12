@@ -11,7 +11,7 @@
 class BaseDataProcessor : public BaseNode {
  public:
   BaseDataProcessor(); 
-  BaseProcessorResult *processDataObject(BaseDataObject *dataObject);
+  virtual BaseProcessorResult *processDataObject(BaseDataObject *dataObject);
 };
 
 

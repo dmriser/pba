@@ -29,7 +29,7 @@ int main(int argc, char *argv[]){
   //  VectorFloatCut *processor = new VectorFloatCut(); 
   BaseDataProcessor *processor = Factory::getProcessorInstance("VectorFloatCut"); 
 
-  for(int i=0; i<10; i++){
+  for(int i=0; i<100; i++){
     if(producer->hasDataObject()){
       BaseDataObject *data = producer->getDataObject(); 
       processor->processDataObject(data); 

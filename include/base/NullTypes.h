@@ -29,7 +29,7 @@ class NullProcessor : public BaseDataProcessor {
  public:
   NullProcessor(){}
   ~NullProcessor(){}
-  BaseProcessorResult *processDataObject(BaseDataObject *dataObject);
+  BaseProcessorResult *processDataObject(BaseDataObject *dataObject){ return new BaseProcessorResult(); }
 };
 
 #endif

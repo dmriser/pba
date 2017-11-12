@@ -13,7 +13,7 @@ VectorFloatProducer::VectorFloatProducer(){
 VectorFloat * VectorFloatProducer::getDataObject(){
   VectorFloat *vec = new VectorFloat(); 
   
-  for (int i=0; i<100000; i++){
+  for (int i=0; i<1000; i++){
     vec->data.push_back(fRandom.Uniform(1.0)); 
   }
 

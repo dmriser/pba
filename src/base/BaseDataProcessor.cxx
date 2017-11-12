@@ -13,8 +13,7 @@ BaseDataProcessor::BaseDataProcessor(){
   fNodeType = node_types::processor; 
 }
 
-BaseProcessorResult * BaseDataProcessor::processDataObject(BaseDataObject *dataObject){
-  std::cout << "[BaseDataProcessor::processDataObject] Base process method called, returning empty result. " << std::endl; 
+BaseProcessorResult *BaseDataProcessor::processDataObject(BaseDataObject *dataObject){
   return new BaseProcessorResult(); 
 }
 
