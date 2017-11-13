@@ -1,0 +1,12 @@
+{
+    "fields":{
+	"run_number":"run number for the entry", 
+	"beam_energy":"beam energy for the entry", 
+	"ec_nsigma":"number of sigma to cut on ec sampling fraction cut"
+    }
+    "data":[
+	{"run_number":38222, "beam_energy":5.498, "ec_nsigma":2.85}, 
+	{"run_number":38223, "beam_energy":5.498, "ec_nsigma":2.95}, 
+	{"run_number":38224, "beam_energy":5.498, "ec_nsigma":2.76}
+    ]
+}
