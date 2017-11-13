@@ -15,7 +15,7 @@ class WorkflowBuilder {
   WorkflowBuilder(); 
   ~WorkflowBuilder(); 
 
-  Workflow *getWorkflow(json *jsonInput, Factory *factory);
+  Workflow *getWorkflow(json *jsonInput);
 };
 
 #endif

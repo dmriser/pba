@@ -4,6 +4,7 @@
 #include "BaseDataAggregator.h"
 #include "BaseDataProcessor.h"
 #include "BaseDataProducer.h"
+#include "Types.h"
 #include "Workflow.h"
 
 Workflow::Workflow(){
@@ -41,6 +42,29 @@ void Workflow::execute(){
   }
   
 
+}
+
+void Workflow::printWorkflowDiagram(){
+  printf("-----------------------------------------------------------------------------\n"); 
+  printf("-----------------------------------------------------------------------------\n"); 
+  printf("\n");
+  printf("                               Workflow Diagram                              \n");
+  printf("\n");
+  printf("         ProducerNode -> %s                                                  \n", fProducer->getId().c_str());
+  printf("                   \\ \n");
+
+  for(BaseDataProcessor *p : fProcessors){
+    printf("                 ProcessorNode -> %s                                          \n", p->getId().c_str());
+  }
+  printf("                         |\n");
+
+  for(BaseDataAggregator *a : fAggregators){
+    printf("                 AggregatorNode -> %s                                         \n", a->getId().c_str());
+  }
+  printf("\n");
+
+  printf("-----------------------------------------------------------------------------\n"); 
+  printf("-----------------------------------------------------------------------------\n"); 
 }
 
 #endif

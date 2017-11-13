@@ -1,29 +1,24 @@
 {
-	"meta":{
-	    "name":"prototype"
+    "nodes":{
+	
+	"producer":{
+	    "id":"VectorFloatProducer", 
+	    "options":{
+		"null":"null"
+	    }
 	},
 
-	"nodes":{
-	    "add_producer":{
-		"id":"VectorFloatProducer",
-		"options":{
-		    "null":"null"
-		}
-	    },
+	"processors":[
+	    {"id":"VectorFloatCut", "options":{"null":"null"} },
+	    {"id":"VectorFloatCut", "options":{"null":"null"} }
+	],
 
-	    "add_processor":{
-		"id":"VectorFloatCut",
-		"options":{
-		    "null":"null"
-		}
-	    }
+	"aggregators":[
+	    {"id":"VectorFloatAnalysis", "options":{"null":"null"} },
+	    {"id":"VectorFloatAnalysis", "options":{"null":"null"} },
+	    {"id":"VectorFloatAnalysis", "options":{"null":"null"} },
+	    {"id":"VectorFloatAnalysis", "options":{"null":"null"} }
+	]
 
-	    "add_aggregator":{
-		"id":"VectorFloatAnalysis",
-		"options":{
-		    "null":"null"
-		}
-	    }	    
-	}
-
+    }
 }

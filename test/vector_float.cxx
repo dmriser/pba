@@ -34,5 +34,7 @@ int main(int argc, char *argv[]){
   workflow->addDataAggregator(aggregator); 
   workflow->execute(); 
 
+  WorkflowBuilder *builder = new WorkflowBuilder(); 
+
   return 0; 
 }

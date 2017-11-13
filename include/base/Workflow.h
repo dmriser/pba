@@ -27,6 +27,8 @@ class Workflow {
     fAggregators.push_back(aggregator); 
   }
 
+  void printWorkflowDiagram(); 
+
  protected:
   BaseDataProducer *               fProducer; 
   std::vector<BaseDataProcessor*>  fProcessors; 
