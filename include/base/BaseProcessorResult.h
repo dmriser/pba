@@ -15,6 +15,10 @@ class BaseProcessorResult {
     return fIsPassed; 
   }
 
+  void setIsPassed(bool b){
+    fIsPassed = b; 
+  }
+
  protected:
   bool        fIsPassed; 
   std::string fId;

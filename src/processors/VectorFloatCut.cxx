@@ -27,7 +27,9 @@ BaseProcessorResult *VectorFloatCut::processDataObject(BaseDataObject *dataObjec
     }
   }
 
-  return new BaseProcessorResult(); 
+  BaseProcessorResult *result = new BaseProcessorResult(); 
+  result->setIsPassed(true); 
+  return result; 
 }
 
 #endif

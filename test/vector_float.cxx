@@ -12,30 +12,27 @@
 #include "VectorFloatAnalysis.h"
 #include "VectorFloatCut.h"
 #include "VectorFloatProducer.h"
-
+#include "Workflow.h"
+#include "WorkflowBuilder.h"
 
 int main(int argc, char *argv[]){
   
   // testing producer 
-  //  VectorFloatProducer *producer = new VectorFloatProducer(); 
   BaseDataProducer *producer = Factory::getProducerInstance("VectorFloatProducer"); 
   
 
   // testing simple aggregator 
-  //  VectorFloatAnalysis *analysis = new VectorFloatAnalysis(); 
-  BaseDataAggregator *analysis = Factory::getAggregatorInstance("VectorFloatAnalysis");
+  BaseDataAggregator *aggregator = Factory::getAggregatorInstance("VectorFloatAnalysis");
 
   // testing simple cut 
-  //  VectorFloatCut *processor = new VectorFloatCut(); 
   BaseDataProcessor *processor = Factory::getProcessorInstance("VectorFloatCut"); 
 
-  for(int i=0; i<100; i++){
-    if(producer->hasDataObject()){
-      BaseDataObject *data = producer->getDataObject(); 
-      processor->processDataObject(data); 
-      analysis->aggregate(data); 
-    }
-  }
+
+  Workflow *workflow = new Workflow(); 
+  workflow->setDataProducer(producer); 
+  workflow->addDataProcessor(processor); 
+  workflow->addDataAggregator(aggregator); 
+  workflow->execute(); 
 
   return 0; 
 }

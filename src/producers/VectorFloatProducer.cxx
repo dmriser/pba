@@ -8,9 +8,12 @@
 
 VectorFloatProducer::VectorFloatProducer(){
   fId = "VectorFloatProducer"; 
+  fIter = 0; 
 }
 
 VectorFloat * VectorFloatProducer::getDataObject(){
+  fIter++; 
+
   VectorFloat *vec = new VectorFloat(); 
   
   for (int i=0; i<1000; i++){
@@ -21,6 +24,10 @@ VectorFloat * VectorFloatProducer::getDataObject(){
 }
 
 bool VectorFloatProducer::hasDataObject(){
+  if (fIter > 10){
+    return false; 
+  }
+
   return true; 
 }
 
