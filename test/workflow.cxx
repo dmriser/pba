@@ -32,8 +32,8 @@ int main(int argc, char *argv[]){
     json j;
     inputFile >> j; 
 
-    WorkflowBuilder *builder = new WorkflowBuilder(); 
-    Workflow *workflow = builder->getWorkflow(&j); 
+
+    Workflow *workflow = WorkflowBuilder::getWorkflow(&j); 
     workflow->execute(); 
 
   } else {
