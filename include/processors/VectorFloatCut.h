@@ -11,8 +11,24 @@ class VectorFloatCut : public BaseDataProcessor {
 
   BaseProcessorResult *processDataObject(BaseDataObject *dataObject); 
 
+  void setCutMin(float min){
+    fCutMin = min; 
+  }
+  
+  void setCutMax(float max){
+    fCutMax = max; 
+  }
+
+  float getCutMin() const {
+    return fCutMin; 
+  } 
+
+  float getCutMax() const {
+    return fCutMax; 
+  } 
+
  protected:
-  float fCutValue; 
+  float fCutMin, fCutMax; 
 
 };
 

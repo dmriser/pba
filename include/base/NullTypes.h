@@ -23,6 +23,7 @@ class NullProducer : public BaseDataProducer {
   ~NullProducer(){ }
   BaseDataObject *getDataObject(){ return new BaseDataObject(); }
   bool hasDataObject(){ return false; }
+  bool requestsConfiguration(){ return false; }
 };
 
 class NullProcessor : public BaseDataProcessor {

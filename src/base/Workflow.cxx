@@ -1,6 +1,7 @@
 #ifndef workflow_cxx
 #define workflow_cxx
 
+#include "BaseConfigurationObject.h"
 #include "BaseDataAggregator.h"
 #include "BaseDataProcessor.h"
 #include "BaseDataProducer.h"
@@ -16,6 +17,16 @@ Workflow::~Workflow(){
 void Workflow::execute(){
   
   while(fProducer->hasDataObject()){
+
+    // see if we need to configure the nodes 
+    if(fProducer->requestsConfiguration()){
+      fProducer->configure(fConfig);
+      for(BaseDataProcessor *processor : fProcessors){ processor->configure(fConfig); }
+      for(BaseDataAggregator *aggregator : fAggregators){ aggregator->configure(fConfig); }
+
+      std::cout << "[Workflow::execute] producer " << fProducer->getId() << " has requested configuration.  " << std::endl; 
+    }
+
     BaseDataObject *dataObject = fProducer->getDataObject(); 
 
     // trickle down through processors 
@@ -65,6 +76,10 @@ void Workflow::printWorkflowDiagram(){
 
   printf("-----------------------------------------------------------------------------\n"); 
   printf("-----------------------------------------------------------------------------\n"); 
+}
+
+void Workflow::setConfigurationObject(BaseConfigurationObject *config){
+  fConfig = config; 
 }
 
 #endif

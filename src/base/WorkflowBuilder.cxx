@@ -6,6 +6,7 @@
 
 #include "BaseDataProducer.h"
 #include "Factory.h"
+#include "JSONConfiguration.h"
 #include "Workflow.h"
 #include "WorkflowBuilder.h"
 
@@ -44,9 +45,24 @@ Workflow *WorkflowBuilder::getWorkflow(json *jsonInput){
   json aggregator_json = nodes.at("aggregators").get<std::vector<json> >();
   json processor_json  = nodes.at("processors").get<std::vector<json> >();   
 
+  // check for meta-data
+  if(jsonInput->count("metadata") != 1){
+    std::cerr << "[WorkflowBuilder::getWorkflow] JSON input file doesn't contain metadata section." << std::endl; 
+    exit(0); 
+  }
+  
+  // retrieve metadata
+  json metadata = jsonInput->at("metadata").get<json>();
+  std::string databaseFile = metadata.at("database").get<std::string>();
+  
+  // setup configuration 
+  JSONConfiguration *jsonDatabase = new JSONConfiguration();
+  jsonDatabase->setDatabase(databaseFile);
 
   // start building the workflow 
   Workflow *workflow = new Workflow(); 
+  workflow->setConfigurationObject(jsonDatabase);
+
   BaseDataProducer *producer = Factory::getProducerInstance(producer_json.at("id").get<std::string>()); 
   workflow->setDataProducer(producer); 
 

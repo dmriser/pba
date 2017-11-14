@@ -12,7 +12,7 @@ class BaseDataProducer : public BaseNode {
 
   virtual BaseDataObject *getDataObject() = 0;
   virtual bool            hasDataObject() = 0; 
-
+  virtual bool            requestsConfiguration() = 0; 
 };
 
 #endif

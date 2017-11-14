@@ -14,6 +14,7 @@ class VectorFloatProducer : public BaseDataProducer {
 
   VectorFloat *getDataObject();
   bool         hasDataObject(); 
+  bool         requestsConfiguration();
 
  protected:
   int      fLength, fIter; 

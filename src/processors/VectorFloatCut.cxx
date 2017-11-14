@@ -7,7 +7,8 @@
 
 VectorFloatCut::VectorFloatCut(){
   fId = "VectorFloatCut";
-  fCutValue = 0.5; 
+  fCutMin = 0.0; 
+  fCutMax = 1.0; 
 }
 
 VectorFloatCut::~VectorFloatCut(){
@@ -19,7 +20,7 @@ BaseProcessorResult *VectorFloatCut::processDataObject(BaseDataObject *dataObjec
   VectorFloat *vectorFloat = dynamic_cast<VectorFloat*>(dataObject); 
 
   for(std::vector<float>::iterator it = vectorFloat->data.begin(); it != vectorFloat->data.end(); ){
-    if ((*it) < fCutValue){
+    if ((*it) < fCutMin || (*it) > fCutMax){
       it = vectorFloat->data.erase(it); 
     }
     else {

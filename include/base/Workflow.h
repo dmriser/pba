@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 
+#include "BaseConfigurationObject.h"
 #include "BaseDataAggregator.h"
 #include "BaseDataProcessor.h"
 #include "BaseDataProducer.h"
@@ -14,6 +15,8 @@ class Workflow {
   ~Workflow(); 
 
   void execute(); 
+
+  void setConfigurationObject(BaseConfigurationObject *config);
 
   void setDataProducer(BaseDataProducer *producer){
     fProducer = producer; 
@@ -33,6 +36,8 @@ class Workflow {
   BaseDataProducer *               fProducer; 
   std::vector<BaseDataProcessor*>  fProcessors; 
   std::vector<BaseDataAggregator*> fAggregators; 
+
+  BaseConfigurationObject         *fConfig; 
 };
 
 #endif

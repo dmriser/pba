@@ -1,4 +1,9 @@
 {
+
+    "metadata":{
+	"database":"/u/home/dmriser/pba/database/prototype.json"
+    },
+
     "nodes":{
 	
 	"producer":{
@@ -14,8 +19,6 @@
 	],
 
 	"aggregators":[
-	    {"id":"VectorFloatAnalysis", "options":{"null":"null"} },
-	    {"id":"VectorFloatAnalysis", "options":{"null":"null"} },
 	    {"id":"VectorFloatAnalysis", "options":{"null":"null"} },
 	    {"id":"VectorFloatAnalysis", "options":{"null":"null"} }
 	]

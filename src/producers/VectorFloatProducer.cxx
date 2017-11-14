@@ -31,4 +31,12 @@ bool VectorFloatProducer::hasDataObject(){
   return true; 
 }
 
+bool VectorFloatProducer::requestsConfiguration(){
+  if (fIter < 1){
+    return true;
+  }
+
+  return false; 
+}
+
 #endif
