@@ -27,6 +27,8 @@ class VectorFloatCut : public BaseDataProcessor {
     return fCutMax; 
   } 
 
+  bool configure(BaseConfigurationObject *config);
+
  protected:
   float fCutMin, fCutMax; 
 

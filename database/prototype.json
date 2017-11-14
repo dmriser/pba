@@ -6,8 +6,8 @@
     },
 
     "data":[
-	{"run_number":38222, "beam_energy":5.498, "ec_nsigma":2.85}, 
-	{"run_number":38223, "beam_energy":5.498, "ec_nsigma":2.95}, 
-	{"run_number":38224, "beam_energy":5.498, "ec_nsigma":2.76}
+	{"run_number":0, "beam_energy":5.498, "ec_nsigma":2.85, "vector_float_cut_min":0.2, "vector_float_cut_max":0.4}, 
+	{"run_number":38222, "beam_energy":5.498, "ec_nsigma":2.85, "vector_float_cut_min":0.2, "vector_float_cut_max":0.4}, 
+	{"run_number":38222, "beam_energy":5.498, "ec_nsigma":2.85, "vector_float_cut_min":0.2, "vector_float_cut_max":0.4}
     ]
 }

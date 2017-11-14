@@ -5,6 +5,9 @@
 
 #include "BaseConfigurationObject.h"
 
+#include "json.hpp"
+using json = nlohmann::json; 
+
 class BaseNode {
 
  public:
@@ -12,6 +15,7 @@ class BaseNode {
   ~BaseNode(); 
 
   virtual bool configure(BaseConfigurationObject *configObject);
+  virtual bool setOptions(json j);
 
   void setId(const std::string & id){
     fId = id; 

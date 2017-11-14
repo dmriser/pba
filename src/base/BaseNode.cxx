@@ -4,6 +4,9 @@
 #include "BaseConfigurationObject.h"
 #include "BaseNode.h"
 
+#include "json.hpp"
+using json = nlohmann::json; 
+
 BaseNode::BaseNode(){
 
 }
@@ -17,5 +20,8 @@ bool BaseNode::configure(BaseConfigurationObject *configObject){
 return false; 
 }
 
+bool BaseNode::setOptions(json j){
+  return false; 
+}
  
 #endif

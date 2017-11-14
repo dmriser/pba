@@ -42,6 +42,8 @@ Workflow *WorkflowBuilder::getWorkflow(json *jsonInput){
 
   // get subsections of json file 
   json producer_json   = nodes.at("producer").get<json>(); 
+  json producer_options = producer_json.at("options").get<json>();
+
   json aggregator_json = nodes.at("aggregators").get<std::vector<json> >();
   json processor_json  = nodes.at("processors").get<std::vector<json> >();   
 
@@ -64,15 +66,21 @@ Workflow *WorkflowBuilder::getWorkflow(json *jsonInput){
   workflow->setConfigurationObject(jsonDatabase);
 
   BaseDataProducer *producer = Factory::getProducerInstance(producer_json.at("id").get<std::string>()); 
+  producer->setOptions(producer_options); 
   workflow->setDataProducer(producer); 
+  
 
   for(json j : aggregator_json){
     BaseDataAggregator *aggregator = Factory::getAggregatorInstance(j.at("id").get<std::string>()); 
+    json opt = j.at("options").get<json>();
+    aggregator->setOptions(opt); 
     workflow->addDataAggregator(aggregator);     
   }
 
   for(json j : processor_json){
     BaseDataProcessor *processor = Factory::getProcessorInstance(j.at("id").get<std::string>()); 
+    json opt = j.at("options").get<json>();
+    processor->setOptions(opt); 
     workflow->addDataProcessor(processor);     
   }
   

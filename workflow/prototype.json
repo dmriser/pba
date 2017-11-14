@@ -8,18 +8,14 @@
 	
 	"producer":{
 	    "id":"VectorFloatProducer", 
-	    "options":{
-		"null":"null"
-	    }
+	    "options":{"iterations":50, "length":100000}
 	},
 
 	"processors":[
-	    {"id":"VectorFloatCut", "options":{"null":"null"} },
 	    {"id":"VectorFloatCut", "options":{"null":"null"} }
 	],
 
 	"aggregators":[
-	    {"id":"VectorFloatAnalysis", "options":{"null":"null"} },
 	    {"id":"VectorFloatAnalysis", "options":{"null":"null"} }
 	]
 

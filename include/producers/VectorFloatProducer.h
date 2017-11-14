@@ -6,6 +6,9 @@
 
 #include "TRandom3.h"
 
+#include "json.hpp"
+using json = nlohmann::json; 
+
 class VectorFloatProducer : public BaseDataProducer {
 
  public:
@@ -15,9 +18,10 @@ class VectorFloatProducer : public BaseDataProducer {
   VectorFloat *getDataObject();
   bool         hasDataObject(); 
   bool         requestsConfiguration();
+  bool         setOptions(json j);
 
  protected:
-  int      fLength, fIter; 
+  int      fLength, fIter, fIterMax; 
   TRandom3 fRandom; 
 
 };
