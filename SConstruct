@@ -5,7 +5,7 @@ env.ParseConfig("root-config --glibs --cflags")
 env.Append(CCFLAGS = ['-g','-std=c++11'])
 env.Append(CPPPATH=['include/base/', 'include/producers/', 'include/aggregators/', 
 				   'include/data/', 'include/processors/', 'include/external/', 
-				   'include/config/'])
+				   'include/config/', 'include/utils/'])
 
 
 # build the library 

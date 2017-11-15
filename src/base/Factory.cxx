@@ -10,9 +10,14 @@
 #include "BaseDataProcessor.h"
 #include "NullTypes.h"
 
+// vector float used for testing 
 #include "VectorFloatAnalysis.h"
 #include "VectorFloatCut.h"
 #include "VectorFloatProducer.h"
+
+// clas event 
+#include "CLASEvent.h"
+#include "CLASEventProducer.h"
 
 Factory::Factory(){
 
@@ -27,6 +32,7 @@ BaseDataAggregator *Factory::getAggregatorInstance(std::string id){
   if(id == "VectorFloatAnalysis"){
     return new VectorFloatAnalysis(); 
   }
+
   else {
     std::cout << "[Factory::getAggregatorInstance] Id not found " << id << std::endl; 
     return new NullAggregator(); 
@@ -40,6 +46,11 @@ BaseDataProducer *Factory::getProducerInstance(std::string id){
   if(id == "VectorFloatProducer"){
     return new VectorFloatProducer(); 
   }
+  
+  else if (id == "NT22CLASEventProducer"){
+    return new NT22CLASEventProducer(); 
+  }
+
   else {
     std::cout << "[Factory::getProducerInstance] Id not found " << id << std::endl; 
     return new NullProducer(); 
