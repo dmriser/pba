@@ -3,4 +3,8 @@
 
 #include "BaseProcessorResult.h"
 
+BaseProcessorResult::BaseProcessorResult(){
+  fIsPassed = true; 
+}
+
 #endif

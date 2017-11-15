@@ -44,6 +44,13 @@ ICBank::ICBank(){
 ICBank::~ICBank(){
 }
 
+MCBank::MCBank(){
+  fId = bank_t::mc;
+}
+
+MCBank::~MCBank(){
+}
+
 PartBank::PartBank(){
   fId = bank_t::part; 
 }
@@ -69,7 +76,9 @@ CLASTrack::CLASTrack(){
 }
 
 CLASTrack::~CLASTrack(){
-  fBanks.clear(); 
+  for(std::pair<int, CLASBank*> bank : fBanks){
+    delete bank.second; 
+  }
 }
 
 bool CLASTrack::hasBank(int bankId){
@@ -77,14 +86,19 @@ bool CLASTrack::hasBank(int bankId){
 }
 
 CLASBank* CLASTrack::getBank(int bankId){
-  return fBanks[bankId].get();
+  return fBanks[bankId];
 }
   
 CLASEvent::CLASEvent(){
 }
 CLASEvent::~CLASEvent(){
-  fMetaBanks.clear();
-  fTracks.clear(); 
+  for(std::pair<int, CLASBank*> bank : fMetaBanks){
+    delete bank.second;
+  }
+
+  for(CLASTrack *track : fTracks){
+    delete track;
+  }
 }
 
 bool CLASEvent::hasMetaBank(int bankId) const {
@@ -92,11 +106,15 @@ bool CLASEvent::hasMetaBank(int bankId) const {
 }
 
 CLASBank * CLASEvent::getMetaBank(int bankId){
-  return fMetaBanks[bankId].get();
+  return fMetaBanks[bankId];
 } 
 
 CLASTrack * CLASEvent::getTrack(int index){
-  return fTracks[index].get();
+  return fTracks[index];
+}
+
+MCBank * CLASEvent::getMCBank(int index){
+  return fMCBanks[index];
 }
 
 #endif

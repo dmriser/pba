@@ -6,6 +6,8 @@
 class BaseProcessorResult {
 
  public:
+  BaseProcessorResult(); 
+
 
   std::string getId() const {
     return fId; 

@@ -18,6 +18,7 @@
 // clas event 
 #include "CLASEvent.h"
 #include "CLASEventProducer.h"
+#include "CLASEventTestAggregator.h"
 
 Factory::Factory(){
 
@@ -31,6 +32,10 @@ BaseDataAggregator *Factory::getAggregatorInstance(std::string id){
 
   if(id == "VectorFloatAnalysis"){
     return new VectorFloatAnalysis(); 
+  }
+
+  else if (id == "CLASEventTestAggregator"){
+    return new CLASEventTestAggregator();
   }
 
   else {

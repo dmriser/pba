@@ -1,0 +1,5 @@
+# todo 
+
+--> CLASEventProducer 
+    -> Add the more complicated entries to the banks in the event builder, such as theta_cc and rotated DC hit positions
+    -> Check with MC file that MC banks get loaded

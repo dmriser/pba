@@ -37,8 +37,8 @@ class CLASEventProducer : public BaseDataProducer {
  protected:
   TChain     *fChain; 
   long int    fCurrentEntry, fMaxEntries;
-  int         fFilesToProcess; 
-  std::string fFilesList; 
+  int         fFilesToProcess, fFileType; 
+  std::string fFilesList, fCurrentFile; 
   StatusBar   fStatusBar; 
   
   void addFile(std::string file);

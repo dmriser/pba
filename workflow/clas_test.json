@@ -6,7 +6,7 @@
     "nodes":{	
 	"producer":{
 	    "id":"NT22CLASEventProducer", 
-	    "options":{"file_list":"/u/home/dmriser/Analysis_v2/lists/good_files.dat", "n_files":4}
+	    "options":{"file_list":"/u/home/dmriser/Analysis_v2/lists/good_files.dat", "n_files":1, "data_type":0}
 	},
 
 	"processors":[
@@ -14,7 +14,7 @@
 	],
 
 	"aggregators":[
-	    {"id":"NullAggregator", "options":{"null":"null"}}
+	    {"id":"CLASEventTestAggregator", "options":{"output_file":"/volatile/clas12/dmriser/rootFiles/clas_test.root"}}
 	]
     }
 }

@@ -16,7 +16,7 @@ using json = nlohmann::json;
 // that contain this data  
 #include "TBranch.h"
 #include "TChain.h"
-#include "TStopwatch.h"
+#include "TFile.h"
 
 CLASEventProducer::CLASEventProducer(){
   fId = "CLASEventProducer";
@@ -45,19 +45,27 @@ bool CLASEventProducer::hasDataObject(){
 }
 
 bool CLASEventProducer::requestsConfiguration(){
-  return false; 
+  
+  std::string file(fChain->GetFile()->GetName()); 
+  if(fCurrentFile != file){
+    fCurrentFile = file; 
+    return true; 
+  }
+
+  return false;
 }
 
 bool CLASEventProducer::setOptions(json j){
 
-  if(j.count("n_files") != 1 || j.count("file_list") != 1){
-    std::cerr << "[CLASEventProducer::setOptions] FATAL: Both options n_files and file_list need to be supplied for this class to do setup." << std::endl; 
+  if(j.count("n_files") != 1 || j.count("file_list") != 1 || j.count("data_type") != 1){
+    std::cerr << "[CLASEventProducer::setOptions] FATAL: Options n_files, file_list, and data_type need to be supplied for this class to do setup." << std::endl; 
     exit(0);
   }
 
   // setting local variables 
   fFilesList = j.at("file_list").get<std::string>();
   fFilesToProcess = j.at("n_files").get<int>(); 
+  fFileType = j.at("data_type").get<int>();
 
   setupTree(); 
 
@@ -111,8 +119,8 @@ void NT22CLASEventProducer::setupTree(){
   
   inputFile.close(); 
 
-
   // setting max entries to length of tree
+  fCurrentFile = std::string(fChain->GetFile()->GetName()); 
   fMaxEntries = fChain->GetEntries(); 
 
   // required setup 
@@ -163,27 +171,119 @@ void NT22CLASEventProducer::setupTree(){
   fChain->SetBranchAddress("tl3_cz", tl3_cz, &b_tl3_cz);
   fChain->SetBranchAddress("vx", vx, &b_vx);
   fChain->SetBranchAddress("vy", vy, &b_vy);
-  fChain->SetBranchAddress("mcnentr", &mcnentr, &b_mcnentr);
-  fChain->SetBranchAddress("mcnpart", &mcnpart, &b_mcnpart);
-  fChain->SetBranchAddress("mcst", mcst, &b_mcst);
-  fChain->SetBranchAddress("mcid", mcid, &b_mcid);
-  fChain->SetBranchAddress("mcpid", mcpid, &b_mcpid);
-  fChain->SetBranchAddress("mctheta", mctheta, &b_mctheta);
-  fChain->SetBranchAddress("mcphi", mcphi, &b_mcphi);
-  fChain->SetBranchAddress("mcp", mcp, &b_mcp);
-  fChain->SetBranchAddress("mcm", mcm, &b_mcm);
-  fChain->SetBranchAddress("mcvx", mcvx, &b_mcvx);
-  fChain->SetBranchAddress("mcvy", mcvy, &b_mcvy);
-  fChain->SetBranchAddress("mcvz", mcvz, &b_mcvz);
-  fChain->SetBranchAddress("mctof", mctof, &b_mctof);
+
+  if (fFileType == 1){
+    fChain->SetBranchAddress("mcnentr", &mcnentr, &b_mcnentr);
+    fChain->SetBranchAddress("mcnpart", &mcnpart, &b_mcnpart);
+    fChain->SetBranchAddress("mcst", mcst, &b_mcst);
+    fChain->SetBranchAddress("mcid", mcid, &b_mcid);
+    fChain->SetBranchAddress("mcpid", mcpid, &b_mcpid);
+    fChain->SetBranchAddress("mctheta", mctheta, &b_mctheta);
+    fChain->SetBranchAddress("mcphi", mcphi, &b_mcphi);
+    fChain->SetBranchAddress("mcp", mcp, &b_mcp);
+    fChain->SetBranchAddress("mcm", mcm, &b_mcm);
+    fChain->SetBranchAddress("mcvx", mcvx, &b_mcvx);
+    fChain->SetBranchAddress("mcvy", mcvy, &b_mcvy);
+    fChain->SetBranchAddress("mcvz", mcvz, &b_mcvz);
+    fChain->SetBranchAddress("mctof", mctof, &b_mctof);
+  }
+
 }
 
 CLASEvent * NT22CLASEventProducer::getDataObject(){
 
   fChain->GetEntry(fCurrentEntry);
-  
 
-  return new CLASEvent(); 
+  CLASEvent *event = new CLASEvent(); 
+
+  ScalarBank *scalar = new ScalarBank();
+  scalar->event_id   = evntid; 
+  scalar->gpart      = gpart; 
+  scalar->q_l        = q_l; 
+  scalar->helicity   = corr_hel; 
+  scalar->start_time = tr_time; 
+  event->addMetaBank(bank_t::scalar, scalar); 
+
+  for(int itrack=0; itrack<gpart; itrack++){
+    
+    CLASTrack *track = new CLASTrack(); 
+    
+    CCBank *cc         = new CCBank(); 
+    DCBank *dc         = new DCBank(); 
+    ECBank *ec         = new ECBank(); 
+    PartBank *part     = new PartBank(); 
+    TOFBank *tof       = new TOFBank(); 
+    
+    part->p    = p[itrack]; 
+    part->q    = (int) q[itrack]; 
+    part->vx   = vx[itrack]; 
+    part->vy   = vy[itrack]; 
+    part->vz   = vz[itrack]; 
+    part->etot = etot[itrack]; 
+
+    cc->nphe    = (int) nphe[itrack]; 
+    cc->segment = (int) cc_segm[itrack]; 
+    cc->sector  = (int) cc_sect[itrack];
+    cc->chi2    = cc_c2[itrack]; 
+    cc->path    = cc_r[itrack];
+    cc->time    = cc_t[itrack];
+
+    dc->x_r1 = tl1_x[itrack]; 
+    dc->y_r1 = tl1_y[itrack]; 
+    dc->z_r1 = tl1_z[itrack]; 
+    dc->x_r3 = tl3_x[itrack]; 
+    dc->y_r3 = tl3_y[itrack]; 
+    dc->z_r3 = tl3_z[itrack]; 
+    dc->cx_r1 = tl1_cx[itrack];
+    dc->cy_r1 = tl1_cy[itrack];
+    dc->cx_r3 = tl3_cx[itrack];
+    dc->cy_r3 = tl3_cy[itrack];
+    dc->cz_r3 = tl3_cz[itrack];
+    dc->sector = (int) dc_sect[itrack];
+
+    ec->edep_inner = ec_ei[itrack]; 
+    ec->edep_outer = ec_eo[itrack]; 
+    ec->edep         = edep[itrack]; 
+    ec->x            = ech_x[itrack];
+    ec->y            = ech_y[itrack];
+    ec->z            = ech_z[itrack];
+    ec->path         = ec_r[itrack]; 
+    ec->time         = ec_t[itrack];
+    ec->sector       = (int) ec_sect[itrack];
+
+    tof->path        = sc_r[itrack];
+    tof->time        = sc_t[itrack];
+    tof->sector      = (int) sc_sect[itrack]; 
+    tof->paddle      = (int) sc_pd[itrack];
+
+    track->addBank(bank_t::cc,   cc);
+    track->addBank(bank_t::dc,   dc);
+    track->addBank(bank_t::ec,   ec);
+    track->addBank(bank_t::part, part);
+    track->addBank(bank_t::tof,  tof);
+
+    event->addTrack(track);
+  }
+
+  if(fFileType == 1){
+    for(int ipart=0; ipart<mcnentr; ipart++){
+      MCBank *bank = new MCBank(); 
+
+      bank->pid   = mcid[ipart]; 
+      bank->p     = mcp[ipart]; 
+      bank->mass  = mcm[ipart]; 
+      bank->vx    = mcvx[ipart];
+      bank->vy    = mcvy[ipart];
+      bank->vz    = mcvz[ipart];
+      bank->theta = mctheta[ipart];
+      bank->phi   = mcphi[ipart];
+      bank->tof   = mctof[ipart];
+
+      event->addMCBank(bank); 
+    }
+  }
+
+  return event; 
 }   
 
 #endif

@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <map>
-#include <memory>
 #include <vector>
 
 #include "BaseDataObject.h"
@@ -14,7 +13,10 @@ enum bank_t {
   dc,
   ec,
   ic,
+  mc,
   part, 
+  physics,
+  pid,
   scalar,
   tof
 };
@@ -74,6 +76,16 @@ class ICBank : public CLASBank {
   float x, y; 
 };
 
+class MCBank : public CLASBank {
+ public:
+  MCBank(); 
+  ~MCBank(); 
+
+  int pid; 
+  float mass, p, theta, phi, vx, vy, vz, tof; 
+
+};
+
 class PartBank : public CLASBank {
  public:
   PartBank(); 
@@ -101,8 +113,7 @@ class TOFBank : public CLASBank {
   ~TOFBank(); 
 
   int sector, paddle; 
-  float path, time; 
-  
+  float path, time;   
 };
 
 class CLASTrack {
@@ -110,11 +121,15 @@ class CLASTrack {
   CLASTrack(); 
   ~CLASTrack(); 
 
+  void addBank(int bankId, CLASBank* bank){
+    fBanks[bankId] = bank; 
+  }
+
   bool hasBank(int bankId); 
   CLASBank* getBank(int bankId);
   
  protected:
-  std::map<int, std::unique_ptr<CLASBank> > fBanks; 
+  std::map<int, CLASBank*> fBanks; 
   
 };
 
@@ -126,14 +141,32 @@ class CLASEvent : public BaseDataObject {
   int getNumberOfTracks() const {
     return fTracks.size(); 
   }
+
+  int getNumberOfMCTracks() const {
+    return fMCBanks.size();
+  }
+
+  void addTrack(CLASTrack* track){
+    fTracks.push_back(track); 
+  }
+
+  void addMetaBank(int bankId, CLASBank* bank){
+    fMetaBanks[bankId] = bank; 
+  }
  
+  void addMCBank(MCBank *bank){
+    fMCBanks.push_back(bank);
+  }
+
   bool hasMetaBank(int bankId) const;
   CLASBank  *getMetaBank(int bankId); 
+  MCBank *getMCBank(int index);
   CLASTrack *getTrack(int index);   
 
  protected:
-  std::map<int, std::unique_ptr<CLASBank> > fMetaBanks; 
-  std::vector< std::unique_ptr<CLASTrack> >  fTracks; 
+  std::map<int, CLASBank*>  fMetaBanks; 
+  std::vector<CLASTrack*>   fTracks; 
+  std::vector<MCBank*>      fMCBanks; 
 };
 
 #endif
