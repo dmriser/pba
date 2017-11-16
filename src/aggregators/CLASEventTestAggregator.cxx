@@ -19,6 +19,8 @@ using json = nlohmann::json;
 CLASEventTestAggregator::CLASEventTestAggregator(){
   fId = "CLASEventTestAggregator";
   h_p = new TH1F("h_p", "h_p", 400, 0.0, 6.0); 
+  h2_rphi_theta = new TH2F("h2_rphi_theta", "", 200, -30, 30, 200, 0, 80); 
+  h2_p_etot = new TH2F("h2_p_etot", "", 200, 0.0, 4.0, 200, 0.05, 0.5); 
 }
 
 CLASEventTestAggregator::~CLASEventTestAggregator(){
@@ -40,13 +42,18 @@ bool CLASEventTestAggregator::setOptions(json j){
 
 void CLASEventTestAggregator::aggregate(BaseDataObject *dataObject){
   CLASEvent *event = dynamic_cast<CLASEvent*>(dataObject);   
-
+  
   for(int itrack=0; itrack<event->getNumberOfTracks(); itrack++){
     CLASTrack *track = event->getTrack(itrack);
-
+    
     if(track->hasBank(bank_t::part)){
       PartBank *part = static_cast<PartBank*>(track->getBank(bank_t::part)); 
       h_p->Fill(part->p);
+      h2_rphi_theta->Fill(part->relative_phi, part->theta); 
+      
+      if(part->q < 0){
+	h2_p_etot->Fill(part->p, part->etot/part->p); 
+      }
     }
   }
 }
@@ -58,6 +65,8 @@ void CLASEventTestAggregator::finish(){
   if(outputFile->IsOpen()){
     outputFile->cd("/"); 
     h_p->Write(); 
+    h2_rphi_theta->Write();
+    h2_p_etot->Write();
     outputFile->Close(); 
   }
 

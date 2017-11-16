@@ -13,6 +13,7 @@ using json = nlohmann::json;
 
 // cern root includes 
 #include "TH1.h"
+#include "TH2.h"
 
 class CLASEventTestAggregator : public BaseDataAggregator {
  public:
@@ -25,6 +26,8 @@ class CLASEventTestAggregator : public BaseDataAggregator {
   void finish(); 
 
   TH1F *h_p; 
+  TH2F *h2_rphi_theta; 
+  TH2F *h2_p_etot; 
 
  protected:
   std::string fOutputFile; 

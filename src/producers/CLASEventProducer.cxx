@@ -8,6 +8,7 @@
 #include "BaseDataProducer.h"
 #include "CLASEvent.h"
 #include "CLASEventProducer.h"
+#include "Utilities.h"
 
 #include "json.hpp"
 using json = nlohmann::json; 
@@ -17,6 +18,7 @@ using json = nlohmann::json;
 #include "TBranch.h"
 #include "TChain.h"
 #include "TFile.h"
+#include "TVector3.h"
 
 CLASEventProducer::CLASEventProducer(){
   fId = "CLASEventProducer";
@@ -220,13 +222,9 @@ CLASEvent * NT22CLASEventProducer::getDataObject(){
     part->vy   = vy[itrack]; 
     part->vz   = vz[itrack]; 
     part->etot = etot[itrack]; 
-
-    cc->nphe    = (int) nphe[itrack]; 
-    cc->segment = (int) cc_segm[itrack]; 
-    cc->sector  = (int) cc_sect[itrack];
-    cc->chi2    = cc_c2[itrack]; 
-    cc->path    = cc_r[itrack];
-    cc->time    = cc_t[itrack];
+    part->theta        = Utilities::getTheta(cz[itrack]); 
+    part->phi          = Utilities::getPhi(cx[itrack], cy[itrack]); 
+    part->relative_phi = Utilities::getRelativePhi(cx[itrack], cy[itrack]); 
 
     dc->x_r1 = tl1_x[itrack]; 
     dc->y_r1 = tl1_y[itrack]; 
@@ -241,6 +239,15 @@ CLASEvent * NT22CLASEventProducer::getDataObject(){
     dc->cz_r3 = tl3_cz[itrack];
     dc->sector = (int) dc_sect[itrack];
 
+    cc->nphe    = (int) nphe[itrack]; 
+    cc->segment = (int) cc_segm[itrack]; 
+    cc->sector  = (int) cc_sect[itrack];
+    cc->chi2    = cc_c2[itrack]; 
+    cc->path    = cc_r[itrack];
+    cc->time    = cc_t[itrack];
+    cc->theta   = Utilities::getThetaCC(dc->x_r3, dc->y_r3, dc->z_r3, 
+				       dc->cx_r3, dc->cy_r3, dc->cz_r3);   
+
     ec->edep_inner = ec_ei[itrack]; 
     ec->edep_outer = ec_eo[itrack]; 
     ec->edep         = edep[itrack]; 
@@ -250,6 +257,11 @@ CLASEvent * NT22CLASEventProducer::getDataObject(){
     ec->path         = ec_r[itrack]; 
     ec->time         = ec_t[itrack];
     ec->sector       = (int) ec_sect[itrack];
+
+    TVector3 uvw = Utilities::getUVW(ech_x[itrack], ech_y[itrack], ech_z[itrack]); 
+    ec->u = uvw.X(); 
+    ec->v = uvw.Y(); 
+    ec->w = uvw.Z(); 
 
     tof->path        = sc_r[itrack];
     tof->time        = sc_t[itrack];
