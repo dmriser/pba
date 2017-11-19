@@ -3,6 +3,7 @@
 
 #include "BaseDataProcessor.h"
 #include "BaseProcessorResult.h"
+#include "Factory.h"
 
 class VectorFloatCut : public BaseDataProcessor {
  public:
@@ -32,6 +33,11 @@ class VectorFloatCut : public BaseDataProcessor {
  protected:
   float fCutMin, fCutMax; 
 
+ private:
+  static ProducerRegister<VectorFloatCut> addToFactory; 
+
 };
+
+ProducerRegister<VectorFloatCut> VectorFloatCut::addToFactory("VectorFloatCut"); 
 
 #endif

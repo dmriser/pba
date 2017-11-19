@@ -15,11 +15,6 @@
 #include "VectorFloatCut.h"
 #include "VectorFloatProducer.h"
 
-// clas event 
-#include "CLASEvent.h"
-#include "CLASEventProducer.h"
-#include "CLASEventTestAggregator.h"
-
 Factory::Factory(){
 
 }
@@ -30,12 +25,8 @@ Factory::~Factory(){
 
 BaseDataAggregator *Factory::getAggregatorInstance(std::string id){
 
-  if(id == "VectorFloatAnalysis"){
-    return new VectorFloatAnalysis(); 
-  }
-
-  else if (id == "CLASEventTestAggregator"){
-    return new CLASEventTestAggregator();
+  if(Factory::getAggregatorRegistry().count(id) == 1){
+    return Factory::getAggregatorRegistry()[id]; 
   }
 
   else {
@@ -48,12 +39,8 @@ BaseDataAggregator *Factory::getAggregatorInstance(std::string id){
 
 BaseDataProducer *Factory::getProducerInstance(std::string id){
 
-  if(id == "VectorFloatProducer"){
-    return new VectorFloatProducer(); 
-  }
-  
-  else if (id == "NT22CLASEventProducer"){
-    return new NT22CLASEventProducer(); 
+  if(Factory::getProducerRegistry().count(id) == 1){
+    return Factory::getProducerRegistry()[id]; 
   }
 
   else {
@@ -65,9 +52,12 @@ BaseDataProducer *Factory::getProducerInstance(std::string id){
 }
 
 BaseDataProcessor *Factory::getProcessorInstance(std::string id){
-  if(id == "VectorFloatCut"){
-    return new VectorFloatCut(); 
+
+  if(Factory::getProcessorRegistry().count(id) == 1){
+    return Factory::getProcessorRegistry()[id]; 
   }
+
+
   else{
     std::cout << "[Factory::getProcessorInstance] Id not found " << id << std::endl; 
     return new NullProcessor(); 

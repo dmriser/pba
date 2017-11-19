@@ -6,6 +6,7 @@
 
 #include "BaseDataObject.h"
 #include "BaseDataAggregator.h"
+#include "Factory.h"
 #include "VectorFloat.h"
 
 class VectorFloatAnalysis : public BaseDataAggregator {
@@ -19,6 +20,11 @@ class VectorFloatAnalysis : public BaseDataAggregator {
  protected:
   float fMean, fVar;
 
+ private:
+  static AggregatorRegister<VectorFloatAnalysis> addToFactory; 
+
 };
+
+AggregatorRegister<VectorFloatAnalysis> VectorFloatAnalysis::addToFactory("VectorFloatAnalysis"); 
 
 #endif
